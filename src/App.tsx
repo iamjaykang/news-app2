@@ -8,14 +8,13 @@ import { NewsContent } from "./components/NewsContent/NewsContent";
 function App() {
   const [category, setCategory] = useState("news");
   const [newsArray, setNewsArray] = useState([]);
-  const [newsResults, setNewsResults] = useState();
 
   const newsApi = async () => {
     try {
       const news = await NewsSource.get(
         `/latest_headlines?countries=NZ&topic=${category}&page_size=30`, {
           headers: {
-              'x-api-key': 'Gi_eFUSvXH7W5ISw7CYStYmTcdk7WC5APPfdykMgI18'
+              'x-api-key': `${process.env.REACT_APP_NEWS_CATCHER_API_KEY}`
           }
         }
       );
@@ -34,7 +33,7 @@ function App() {
   //useeffect fires only when news results change or category changes
   useEffect(() => {
     newsApi();
-  }, [newsResults, category]);
+  }, [category]);
 
   return (
     <div className="App">
